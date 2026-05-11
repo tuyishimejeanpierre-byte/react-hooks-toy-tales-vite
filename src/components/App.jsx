@@ -12,6 +12,13 @@ function App() {
   function addToy(newToy) {
   setToys([...toys, newToy]);
 }
+function deleteToy(id) {
+  fetch(`http://localhost:6001/toys/${id}`, {
+    method: "DELETE",
+  });
+
+  setToys(toys.filter((toy) => toy.id !== id));
+}
 
   function handleClick() {
     setShowForm((showForm) => !showForm);
@@ -35,7 +42,7 @@ function App() {
       </div>
 
       {/* ✅ PASS TOYS DOWN */}
-      <ToyContainer toys={toys} />
+     <ToyContainer toys={toys} deleteToy={deleteToy} />
     </>
   );
 }
