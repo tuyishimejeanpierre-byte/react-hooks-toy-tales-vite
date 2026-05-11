@@ -10,14 +10,14 @@ function App() {
   // ✅ ADD STATE FOR TOYS
   const [toys, setToys] = useState([]);
   function addToy(newToy) {
-  setToys([...toys, newToy]);
+  setToys((prev) => [...prev, newToy]);
 }
 function deleteToy(id) {
   fetch(`http://localhost:6001/toys/${id}`, {
     method: "DELETE",
   });
 
-  setToys(toys.filter((toy) => toy.id !== id));
+  setToys((prev) => prev.filter((toy) => toy.id !== id));
 }
 
   function handleClick() {
@@ -42,8 +42,8 @@ function deleteToy(id) {
   })
     .then((res) => res.json())
     .then((updatedToy) => {
-      setToys(
-        toys.map((toy) =>
+      setToys((prev) =>
+        prev.map((toy) =>
           toy.id === updatedToy.id ? updatedToy : toy
         )
       );
@@ -61,7 +61,12 @@ function deleteToy(id) {
       </div>
 
       {/* ✅ PASS TOYS DOWN */}
-     <ToyContainer toys={toys} deleteToy={deleteToy} updateLikes={updateLikes} />
+     <ToyContainer
+  toys={toys}
+  setToys={setToys}
+  deleteToy={deleteToy}
+  updateLikes={updateLikes}
+/>
     </>
   );
 }

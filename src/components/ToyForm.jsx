@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 function ToyForm({ addToy }) {
   const [formData, setFormData] = useState({
     name: "",
@@ -14,63 +13,48 @@ function ToyForm({ addToy }) {
   }
 
   function handleSubmit(e) {
-    e.preventDefault();
+  e.preventDefault();
 
-    const newToy = {
-      name: formData.name,
-      image: formData.image,
-      likes: 0, // REQUIRED by tests
-    };
+  const newToy = {
+    name: formData.name,
+    image: formData.image,
+    likes: 0,
+  };
 
-    fetch("http://localhost:6001/toys", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newToy),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        addToy(data); // update App state
-      });
+  fetch("http://localhost:6001/toys", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newToy),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      addToy(data); // ✅ THIS is correct
+    });
 
-    setFormData({ name: "", image: "" });
-  }
-
+  setFormData({
+    name: "",
+    image: "",
+  });
+}
   return (
-    <div className="container">
-      <form className="add-toy-form" onSubmit={handleSubmit}>
-        <h3>Create a toy!</h3>
+    <form onSubmit={handleSubmit}>
+      <input
+  name="name"
+  placeholder="Enter a toy's name..."
+  value={formData.name}
+  onChange={handleChange}
+/>
 
-        <input
-          type="text"
-          name="name"
-          placeholder="Enter a toy's name..."
-          className="input-text"
-          value={formData.name}
-          onChange={handleChange}
-        />
-        <br />
-
-        <input
-          type="text"
-          name="image"
-          placeholder="Enter a toy's image URL..."
-          className="input-text"
-          value={formData.image}
-          onChange={handleChange}
-        />
-        <br />
-
-        <input
-          type="submit"
-          name="submit"
-          value="Create New Toy"
-          className="submit"
-        />
-      </form>
-    </div>
+<input
+  name="image"
+  placeholder="Enter a toy's image URL..."
+  value={formData.image}
+  onChange={handleChange}
+/>
+      <button type="submit">Create New Toy</button>
+    </form>
   );
 }
-
 export default ToyForm;
