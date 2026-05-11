@@ -30,6 +30,25 @@ function deleteToy(id) {
       .then((res) => res.json())
       .then((data) => setToys(data));
   }, []);
+  function updateLikes(toyObj) {
+  fetch(`http://localhost:6001/toys/${toyObj.id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      likes: toyObj.likes + 1,
+    }),
+  })
+    .then((res) => res.json())
+    .then((updatedToy) => {
+      setToys(
+        toys.map((toy) =>
+          toy.id === updatedToy.id ? updatedToy : toy
+        )
+      );
+    });
+}
 
   return (
     <>
@@ -42,7 +61,7 @@ function deleteToy(id) {
       </div>
 
       {/* ✅ PASS TOYS DOWN */}
-     <ToyContainer toys={toys} deleteToy={deleteToy} />
+     <ToyContainer toys={toys} deleteToy={deleteToy} updateLikes={updateLikes} />
     </>
   );
 }
