@@ -9,6 +9,9 @@ function App() {
 
   // ✅ ADD STATE FOR TOYS
   const [toys, setToys] = useState([]);
+  function addToy(newToy) {
+  setToys([...toys, newToy]);
+}
 
   function handleClick() {
     setShowForm((showForm) => !showForm);
@@ -25,7 +28,7 @@ function App() {
     <>
       <Header />
 
-      {showForm ? <ToyForm /> : null}
+      {showForm && <ToyForm addToy={addToy} />}
 
       <div className="buttonContainer">
         <button onClick={handleClick}>Add a Toy</button>
