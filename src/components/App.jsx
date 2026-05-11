@@ -4,6 +4,8 @@ import Header from "./Header";
 import ToyForm from "./ToyForm";
 import ToyContainer from "./ToyContainer";
 
+const API = "http://localhost:3000/toys";
+
 function App() {
   const [showForm, setShowForm] = useState(false);
 
@@ -13,7 +15,7 @@ function App() {
   setToys((prev) => [...prev, newToy]);
 }
 function deleteToy(id) {
-  fetch(`http://localhost:6001/toys/${id}`, {
+  fetch(`${API}/${id}`, {
     method: "DELETE",
   });
 
@@ -26,12 +28,12 @@ function deleteToy(id) {
 
   // ✅ FETCH TOYS ON PAGE LOAD
   useEffect(() => {
-    fetch("http://localhost:6001/toys")
-      .then((res) => res.json())
-      .then((data) => setToys(data));
+    fetch(API)
+      .then(res => res.json())
+      .then(setToys);
   }, []);
   function updateLikes(toyObj) {
-  fetch(`http://localhost:6001/toys/${toyObj.id}`, {
+  fetch(`${API}/${toyObj.id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",

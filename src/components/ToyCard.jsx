@@ -1,13 +1,15 @@
+
+const API = "http://localhost:3000/toys";
 function ToyCard({ toy, setToys }) {
   function handleDelete() {
-    fetch(`http://localhost:3000/toys/${toy.id}`, {
+    fetch(`${API}/${toy.id}`, {
       method: "DELETE",
     }).then(() => {
       setToys((prev) => prev.filter((t) => t.id !== toy.id));
     });
   }
   function handleLike() {
-  fetch(`http://localhost:3000/toys/${toy.id}`, {
+  fetch(`${API}/${toy.id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",

@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+
+const API = "http://localhost:3000/toys";
 function ToyForm({ addToy }) {
   const [formData, setFormData] = useState({
     name: "",
@@ -21,7 +23,7 @@ function ToyForm({ addToy }) {
     likes: 0,
   };
 
-  fetch("http://localhost:6001/toys", {
+  fetch(API, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -30,12 +32,12 @@ function ToyForm({ addToy }) {
   })
     .then((res) => res.json())
     .then((data) => {
-      addToy(data); // ✅ THIS is correct
-    });
-
-  setFormData({
+      addToy(data);
+      setFormData({
     name: "",
     image: "",
+    });
+  
   });
 }
   return (
